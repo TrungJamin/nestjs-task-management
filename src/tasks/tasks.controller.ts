@@ -22,43 +22,36 @@ import { TasksService } from './tasks.service';
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
-  // @Get()
-  // getTasks(@Query() getTasksFilterDto: GetTasksFilterDto): Task[] {
-  //   // if we have any filters defined, call taskService.getTaskWillFilters()
-  //   // otherwise, just get all tasks
-  //   if (Object.keys(getTasksFilterDto).length) {
-  //     return this.tasksService.getTasksWithFilter(getTasksFilterDto);
-  //   }
-  //   return this.tasksService.getAllTasks();
-  // }
+  @Get()
+  getTasks(@Query() getTasksFilterDto: GetTasksFilterDto): Promise<Task[]> {
+    return this.tasksService.getTasks(getTasksFilterDto);
+  }
 
   @Get('/:id')
   getTaskByID(@Param('id') id: string): Promise<Task> {
     return this.tasksService.getTaskByID(id);
   }
 
-  // // when we use an id after ":", we will call NestJS like
-  // // this is going to be a path parameter and then we'll be able to extract it in the
-  // // parameters of the handler, pretty similarly to how we did it with the body.
-  // @Get('/:id')
-  // getTaskByID(@Param('id') id: string): Task {
-  //   return this.tasksService.getTaskByID(id);
-  // }
+  @Post()
+  createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
+    return this.tasksService.createTask(createTaskDto);
+  }
 
-  // @Post()
-  // createTask(@Body() createTaskDto: CreateTaskDto): Task {
-  //   return this.tasksService.createTask(createTaskDto);
-  // }
+  @Delete('/:id')
+  deleteATask(@Param('id') id: string): Promise<void> {
+    return this.tasksService.deleteATask(id);
+  }
+
   // @Delete('/:id')
   // deleteATask(@Param('id') id: string): void {
   //   return this.tasksService.deleteATask(id);
   // }
-  // @Patch('/:id/status')
-  // updateTaskStatus(
-  //   @Param('id') id: string,
-  //   @Body() updateTaskStatusDto: UpdateTaskStatusDto,
-  // ): Task {
-  //   const { status } = updateTaskStatusDto;
-  //   return this.tasksService.updateTaskStatus(id, status);
-  // }
+  @Patch('/:id/status')
+  updateTaskStatus(
+    @Param('id') id: string,
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+  ): Promise<Task> {
+    const { status } = updateTaskStatusDto;
+    return this.tasksService.updateTaskStatus(id, status);
+  }
 }

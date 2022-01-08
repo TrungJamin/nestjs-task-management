@@ -15,7 +15,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'postgres',
       password: 'trungpro123',
       database: 'task-management',
+      // In Nestjs, you're gonna define you entities, that is how they translate to database tables
+      // and schemas with the help of TypeORM, then it's going to find those entity files and load them for you
       autoLoadEntities: true,
+      // Synchronize: true, is going to always keep your database schema in sync.
       synchronize: true,
     }),
   ],
