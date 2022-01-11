@@ -1,3 +1,4 @@
+import { TransformInterceptor } from './transform.interceptor';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
@@ -11,6 +12,7 @@ async function bootstrap() {
 
   //  before listening and basically making my server live, I'm going to
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(new TransformInterceptor());
   await app.listen(3000);
 }
 bootstrap();
