@@ -18,12 +18,18 @@ import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { Task } from './task.entity';
 import { TasksService } from './tasks.service';
 import { User } from 'src/auth/user.entity';
+import { Logger } from '@nestjs/common';
 
 // The controller job only job is to simply receive a request
 // They'll agree to whatever is needed to achieve the goal and then return the response
 @Controller('tasks')
 @UseGuards(AuthGuard())
 export class TasksController {
+  // We pass a "context" TaskController, this means whenever we log anything with this logger
+  // this is going to be presented as the context, so that's going to make it very easy for us to understand
+  // where our logs are coming from
+  private logger = new Logger('TaskController');
+
   constructor(private tasksService: TasksService) {}
 
   @Get()
@@ -31,6 +37,13 @@ export class TasksController {
     @Query() getTasksFilterDto: GetTasksFilterDto,
     @GetUser() user: User,
   ): Promise<Task[]> {
+    this.logger.verbose(
+      `User "${
+        user.username
+      }" is retrieving all tasks!, Filter: ${JSON.stringify(
+        getTasksFilterDto,
+      )}"`,
+    );
     return this.tasksService.getTasks(getTasksFilterDto, user);
   }
 
@@ -44,6 +57,11 @@ export class TasksController {
     @Body() createTaskDto: CreateTaskDto,
     @GetUser() user: User,
   ): Promise<Task> {
+    this.logger.verbose(
+      `User "${user.username}" is creating a task!, Data: ${JSON.stringify(
+        createTaskDto,
+      )}"`,
+    );
     return this.tasksService.createTask(createTaskDto, user);
   }
 

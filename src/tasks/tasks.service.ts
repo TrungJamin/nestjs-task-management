@@ -7,12 +7,12 @@ import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './task.entity';
 import { User } from 'src/auth/user.entity';
+
 // We will use our task service to contain the business logic related to our tasks, things like
 // creation, deletion, updating, ...
 // any other component in our application that is concerned about tasks
 // For ex: the tasks controller is going to be able to "inject" and communicate
 // with the task service.
-
 @Injectable()
 export class TasksService {
   constructor(
