@@ -15,7 +15,7 @@ async function bootstrap() {
   //  before listening and basically making my server live, I'm going to
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
-  const port = 3000;
+  const port = process.env.PORT;
   await app.listen(port);
   logger.log(`Application listens to port ${port}`);
 }
