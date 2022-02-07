@@ -7,7 +7,7 @@ import { Logger } from '@nestjs/common';
 async function bootstrap() {
   const logger = new Logger();
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  // app.enableCors();
   // So I'm going to basically tell NestJS: "whenever you encounter a validation decorator,
   // I want you to run your validation So I don't have to explicitly define it in any controller
   // or in any parameter."
